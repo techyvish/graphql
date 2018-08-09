@@ -1,0 +1,39 @@
+{
+  "name": "gql-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/babel-node src/server.js",
+    "dev": "NODE_ENV=development nodemon --exec './node_modules/.bin/babel-node src/server.js'",
+    "ts": "NODE_ENV=development nodemon --exec './node_modules/.bin/ts-node src/server.ts'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dataloader": "^1.4.0",
+    "depcheck": "^0.6.9",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "graphql-redis-subscriptions": "^1.5.0",
+    "graphql-subscriptions": "^0.5.8",
+    "graphql-tools": "^3.1.0",
+    "ioredis": "^3.2.2",
+    "lodash": "^4.17.10",
+    "mongodb": "^3.1.1",
+    "mongoose": "^5.2.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "graphql": "^0.13.2",
+    "nodemon": "^1.18.3"
+  }
+}
