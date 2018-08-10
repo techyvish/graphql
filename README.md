@@ -1,3 +1,5 @@
+# GraphQL server starter project !
+
 ### DONE
  - [x] Queries
  - [x] Mutation
