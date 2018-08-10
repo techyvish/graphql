@@ -1,21 +1,25 @@
-GraphQL server
-[x] Queries
-[x] Mutation
-[x] Subscriptions
-[x] Database
-[x] Repositories
-[x] Dataloaders
-[ ] Authentication
-[ ] Authorization
-[ ] Testing
+### DONE
+ - [x] Queries
+ - [x] Mutation
+ - [x] Subscriptions
+ - [x] Database
+ - [x] Repositories
+ - [x] Dataloaders
+ - [x] ScalarTypes
+ - [x] Environment Configs
 
-Types
-[x] ScalarTypes
-[ ] Enums
-[ ] Filters
+### Todos
 
-Other Features
-[ ] Pagination
-[ ] Caching
-[ ] Tracing - Apollo engine
-[x] Environment Configs
+ - [ ] Enums
+ - [ ] Filters
+ - [ ] Pagination
+ - [ ] Caching
+ - [ ] Tracing - Apollo engine
+ - [ ] Authentication
+ - [ ] Authorization
+ - [ ] Testing
+
+License
+----
+
+MIT
