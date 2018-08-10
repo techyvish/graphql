@@ -2,5 +2,6 @@
   "cSpell.words": [
     "Dataloaders",
     "dataloader"
-  ]
+  ],
+  "git.ignoreLimitWarning": true
 }
