@@ -1,41 +1,46 @@
+import {
+  ObjectId,
+} from 'mongodb';
+import autoBind from 'auto-bind';
 import BaseRepository from '../base';
-import { ObjectId } from 'mongodb';
+import {
+  User,
+} from '../../schema';
 
 class UserRepository extends BaseRepository {
 
-  constructor(db) {
+  constructor() {
     super();
-    this.Users = db
+    this.User = User;
+    autoBind(this);
   }
 
-  async create(user) {
-    return await this.Users.insert(user);
+  create(user) {
+    return this.User.create(user);
   }
 
-  async update(user) {
-    return await this.Users.update(user);
+  update(user) {
+    this.User.update(user);
   }
 
-  async delete(user) {
-    return await this.Users.delete(user);
+  delete(user) {
+    this.User.delete(user);
   }
 
-  async findOne(id) {
-    return await this.Users.findOne({ _id: new ObjectId(id) });
+  findOne(id) {
+    return this.User.findOne({
+      _id: new ObjectId(id),
+    }).exec();
   }
 
-  //TODO: add limit/filter etc optional parameters
-  async findAll() {
-    return await this.Users.find();
+  // TODO: add limit/filter etc optional parameters
+  findAll() {
+    return this.User.find().exec();
   }
 
-  async findQuery(query) {
-    return await this.Users.find(query);
+  findQuery(query) {
+    return this.User.find(query).exec();
   }
 }
 
-const createNewUserRepository = (db) => {
-  return new UserRepository(db);
-};
-
-export default createNewUserRepository;
+export default UserRepository;

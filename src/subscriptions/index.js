@@ -1,10 +1,12 @@
-import { RedisPubSub } from 'graphql-redis-subscriptions';
-import * as Redis from 'ioredis';
-
+import {
+  RedisPubSub,
+} from 'graphql-redis-subscriptions';
 
 const redisConnectionListener = (err) => {
-  if (err) console.error(err); // eslint-disable-line no-console
-  console.info('Succefuly connected to redis'); // eslint-disable-line no-console
+  // eslint-disable-next-line no-console
+  if (err) console.error(err);
+  // eslint-disable-next-line no-console
+  console.info('Successfully connected to redis');
 };
 
 const redisOptions = {

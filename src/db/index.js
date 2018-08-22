@@ -1,29 +1,23 @@
-import { MongoClient } from 'mongodb';
-import config from '../config';
+import bluebird from 'bluebird';
+import {
+  configEnum,
+} from '../config';
 
-const url = `${config.db.url}/${config.db.name}`;
-
-const connectMongo = async () => {
-  const client = await MongoClient.connect(url, { useNewUrlParser: true });
-  const db = await client.db();
-  return {
-    Users: db.collection('users'),
-    Stats: db.collection('stats'),
-    Tweets: db.collection('tweets')
-  };
-}
-
-class Repositories {
-  constructor(repositoryBuilder, database) {
-    this.tweetRepository = repositoryBuilder.createNewTweetRepository(database.Tweets);
-    this.userRepository = repositoryBuilder.createNewUserRepository(database.Users);
-    this.statsRepository = repositoryBuilder.createNewStatsRepository(database.Stats);
+const connectMongo = async (config, mongoose) => {
+  const url = `${config[configEnum.DB_URL]}/${config[configEnum.DB_NAME]}`;
+  mongoose.Promise = bluebird;
+  let success = false;
+  try {
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+    });
+    success = true;
+  } catch (err) {
+    success = false;
   }
-}
+  // eslint-disable-next-line
+  mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  return success;
+};
 
-const createRepositories = (repositoryBuilder, database) => new Repositories(repositoryBuilder, database);
-
-export default {
-  connectMongo,
-  createRepositories,
-}
+export default connectMongo;

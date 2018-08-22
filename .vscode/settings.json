@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "Dataloaders",
+    "autobind",
     "dataloader"
   ],
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "cSpell.language": "en"
 }

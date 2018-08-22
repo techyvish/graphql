@@ -1,9 +1,9 @@
-import createNewUserRepository from './user';
-import createNewTweetRepository from './tweet';
-import createNewStatsRepository from './stats';
+import UserRepository from './user';
+import TweetRepository from './tweet';
+import StatsRepository from './stats';
 
-export default {
-  createNewUserRepository,
-  createNewTweetRepository,
-  createNewStatsRepository,
+export {
+  UserRepository,
+  TweetRepository,
+  StatsRepository,
 };

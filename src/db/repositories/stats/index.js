@@ -1,41 +1,46 @@
+import {
+  ObjectId,
+} from 'mongodb';
+import autoBind from 'auto-bind';
 import BaseRepository from '../base';
-import { ObjectId } from 'mongodb';
+import {
+  Stat,
+} from '../../schema';
 
-class StatsRepository extends BaseRepository {
+class StatRepository extends BaseRepository {
 
-  constructor(db) {
+  constructor() {
     super();
-    this.Stats = db
+    this.Stat = Stat;
+    autoBind(this);
   }
 
-  async create(stats) {
-    return await this.Stats.insert(stats);
+  create(stat) {
+    return this.Stat.save(stat);
   }
 
-  async update(stats) {
-    return await this.Stats.update(stats);
+  update(stat) {
+    return this.Stat.update(stat);
   }
 
-  async delete(stats) {
-    return await this.Stats.delete(stats);
+  delete(stat) {
+    return this.Stat.delete(stat);
   }
 
-  async findOne(id) {
-    return await this.Stats.findOne({ _id: new ObjectId(id) });
+  findOne(id) {
+    return this.Stat.findOne({
+      _id: new ObjectId(id),
+    }).exec();
   }
 
-  //TODO: add limit/filter etc optional parameters
-  async findAll() {
-    return await this.Stats.find();
+  // TODO: add limit/filter etc optional parameters
+  findAll() {
+    return this.Stat.find().exec();
   }
 
-  async findQuery(query) {
-    return await this.Stats.find(query);
+  findQuery(query) {
+    return this.Stat.find(query).exec();
   }
 }
 
-const createNewStatsRepository = (db) => {
-  return new StatsRepository(db);
-};
-
-export default createNewStatsRepository;
+export default StatRepository;

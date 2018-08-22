@@ -1,7 +1,7 @@
 import {
   Query as UserQuery,
   User,
-  Mutation as CreateUserMutation
+  Mutation as CreateUserMutation,
 } from './types/user/resolvers';
 
 import {

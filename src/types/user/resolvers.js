@@ -1,27 +1,40 @@
-import { ObjectId } from 'mongodb';
-import { prepare } from '../../utils';
-import Email from '../scalar/Email';
+import {
+  ObjectId,
+} from 'mongodb';
+import {
+  prepare,
+} from '../../utils';
 
 export const Query = {
-  User: async (root, arg, { userRepository }) => {
+  User: async (root, arg, {
+    userRepository,
+  }) => {
     const user = prepare(await userRepository.findOne(arg.id));
     return user;
   },
 };
 
 export const User = {
-  fullname: async (author, _, { tweetRepository }) => {
-    return await (`${author.firstname} ${author.lastname}`);
-  },
-  tweets: async (author, _, { tweetRepository }) => {
-    let tweetsByUser = await tweetRepository.findQuery({ $where: () => { this.author_id == new ObjectId(author._id) }});
-    let data = await tweetsByUser.toArray();
+  fullname: author => `${author.firstname} ${author.lastname}`,
+  tweets: async (author, _, {
+    tweetRepository,
+  }) => {
+    const tweetsByUser = await tweetRepository.findQuery({
+      $where: () => {
+        // eslint-disable-next-line no-underscore-dangle
+        const isEqual = this.author_id === new ObjectId(author._id);
+        return isEqual;
+      },
+    });
+    const data = await tweetsByUser.toArray();
     return data.map(prepare);
-  }
+  },
 };
 
 export const Mutation = {
-  createUser: async (root, arg, { userRepository }) => {
+  createUser: async (root, arg, {
+    userRepository,
+  }) => {
     const newUser = {
       username: arg.authProvider.detail.username,
       firstname: arg.authProvider.detail.firstname,
@@ -29,6 +42,8 @@ export const Mutation = {
       email: arg.authProvider.detail.email,
     };
     const response = await userRepository.create(newUser);
-    return prepare(Object.assign({ _id: response.insertedIds[0] }, newUser));
+    return prepare(Object.assign({
+      _id: response.insertedIds[0],
+    }, newUser));
   },
 };

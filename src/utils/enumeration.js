@@ -1,15 +1,16 @@
-
 export default class Enum {
-
   constructor(obj) {
+    // eslint-disable-next-line
     for (const key in obj) {
-      this[key] = obj[key]
+      if (key !== undefined) {
+        this[key] = obj[key];
+      }
     }
-    return Object.freeze(this)
+    return Object.freeze(this);
   }
 
-  has(key){
-    return this.hasOwnProperty(key)
+  has(key) {
+    // eslint-disable-next-line
+    return this.hasOwnProperty(key);
   }
-
 }

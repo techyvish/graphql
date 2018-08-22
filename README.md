@@ -11,7 +11,6 @@
  - [x] Environment Configs
 
 ### Todos
-
  - [ ] Enums
  - [ ] Filters
  - [ ] Pagination

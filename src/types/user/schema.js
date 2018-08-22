@@ -34,4 +34,3 @@ input AUTH_PROVIDER_DETAIL {
 `;
 
 export default () => [User, Base];
-

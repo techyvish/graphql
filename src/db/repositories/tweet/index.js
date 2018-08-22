@@ -1,41 +1,46 @@
+import {
+  ObjectId,
+} from 'mongodb';
+import autoBind from 'auto-bind';
 import BaseRepository from '../base';
-import { ObjectId } from 'mongodb';
+import {
+  Tweet,
+} from '../../schema';
 
 class TweetRepository extends BaseRepository {
 
-  constructor(db) {
+  constructor() {
     super();
-    this.Tweets = db
+    this.Tweet = Tweet;
+    autoBind(this);
   }
 
-  async create(tweet) {
-    return await this.Tweets.insert(tweet);
+  create(tweet) {
+    return this.Tweet.create(tweet);
   }
 
-  async update(tweet) {
-    return await this.Tweets.update(tweet);
+  update(tweet) {
+    return this.Tweet.update(tweet);
   }
 
-  async delete(tweet) {
-    return await this.Tweets.delete(tweet);
+  delete(tweet) {
+    return this.Tweet.delete(tweet);
   }
 
-  async findOne(id) {
-    return await this.Tweets.findOne({ _id: new ObjectId(id) });
+  findOne(id) {
+    return this.Tweet.findOne({
+      _id: new ObjectId(id),
+    }).exec();
   }
 
-  //TODO: add limit/filter etc optional parameters
-  async findAll() {
-    return await this.Tweets.find();
+  // TODO: add limit/filter etc optional parameters
+  findAll() {
+    return this.Tweet.find().exec();
   }
 
-  async findQuery(query) {
-    return await this.Tweets.find(query);
+  findQuery(query) {
+    return this.Tweet.find(query).exec();
   }
 }
 
-const createNewTweetRepository = (db) => {
-  return new TweetRepository(db);
-};
-
-export default createNewTweetRepository;
+export default TweetRepository;
