@@ -1,6 +1,9 @@
 import mongoose, {
   Schema,
 } from 'mongoose';
+import {
+  prepare
+} from '../../utils';
 
 const Subscription = new Schema({
   plan: {
@@ -19,6 +22,10 @@ const Subscription = new Schema({
     type: Schema.Types.Boolean,
     required: true,
   },
+}, {
+  toObject: {
+    transform: (doc, ret) => prepare(ret),
+  }
 });
 
 export default mongoose.model('Subscription', Subscription);

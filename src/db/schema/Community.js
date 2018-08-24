@@ -1,6 +1,9 @@
 import mongoose, {
   Schema,
 } from 'mongoose';
+import {
+  prepare
+} from '../../utils';
 
 const LocationSchema = new Schema({
   name: String,
@@ -87,6 +90,10 @@ const Community = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+}, {
+  toObject: {
+    transform: (doc, ret) => prepare(ret),
+  }
 });
 
 export default mongoose.model('Community', Community);

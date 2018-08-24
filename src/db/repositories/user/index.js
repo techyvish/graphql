@@ -28,18 +28,40 @@ class UserRepository extends BaseRepository {
   }
 
   findOne(id) {
-    return this.User.findOne({
-      _id: new ObjectId(id),
-    }).exec();
+    return new Promise((resolve, reject) => {
+      this.User.findOne({
+        _id: new ObjectId(id)
+      }).exec().then(result => {
+        resolve(result && result.toObject());
+      }).catch(err => {
+        reject(err);
+      });
+    });
   }
 
   // TODO: add limit/filter etc optional parameters
   findAll() {
-    return this.User.find().exec();
+    return new Promise((resolve, reject) => {
+      this.User.find().exec((err, doc) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc && doc.map(o => o.toObject()));
+        }
+      });
+    });
   }
 
   findQuery(query) {
-    return this.User.find(query).exec();
+    return new Promise((resolve, reject) => {
+      this.User.find(query).exec((err, doc) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc && doc.map(o => o.toObject()));
+        }
+      });
+    });
   }
 }
 

@@ -1,8 +1,11 @@
 import mongoose, {
   Schema,
 } from 'mongoose';
+import {
+  prepare
+} from '../../utils';
 
-const Tweet = new Schema({
+const TweetSchema = new Schema({
   body: String,
   authorId: {
     type: Schema.Types.ObjectId,
@@ -13,6 +16,11 @@ const Tweet = new Schema({
     default: Date.now,
     required: true,
   },
+}, {
+  toObject: {
+    transform: (doc, ret) => prepare(ret),
+  }
 });
 
-export default mongoose.model('Tweet', Tweet);
+const Tweet = mongoose.model('Tweet', TweetSchema);
+export default Tweet;

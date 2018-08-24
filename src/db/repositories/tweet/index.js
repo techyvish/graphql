@@ -28,18 +28,42 @@ class TweetRepository extends BaseRepository {
   }
 
   findOne(id) {
-    return this.Tweet.findOne({
-      _id: new ObjectId(id),
-    }).exec();
+    return new Promise((resolve, reject) => {
+      this.Tweet.findOne({
+        _id: new ObjectId(id),
+      }).exec((err, doc) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc && doc.toObject());
+        }
+      });
+    });
   }
 
   // TODO: add limit/filter etc optional parameters
   findAll() {
-    return this.Tweet.find().exec();
+    return new Promise((resolve, reject) => {
+      this.Tweet.find().exec((err, doc) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc && doc.map(o => o.toObject()));
+        }
+      });
+    });
   }
 
   findQuery(query) {
-    return this.Tweet.find(query).exec();
+    return new Promise((resolve, reject) => {
+      this.Tweet.find(query).exec((err, doc) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(doc && doc.map(o => o.toObject()));
+        }
+      });
+    });
   }
 }
 

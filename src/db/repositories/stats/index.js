@@ -28,18 +28,36 @@ class StatRepository extends BaseRepository {
   }
 
   findOne(id) {
-    return this.Stat.findOne({
-      _id: new ObjectId(id),
-    }).exec();
+    return new Promise((resolve, reject) => {
+      this.Stat.findOne({
+        _id: new ObjectId(id),
+      }).exec().then(doc => {
+        resolve(doc && doc.toObject());
+      }).catch(err => {
+        reject(err);
+      });
+    });
   }
 
   // TODO: add limit/filter etc optional parameters
   findAll() {
-    return this.Stat.find().exec();
+    return new Promise((resolve, reject) => {
+      this.Stat.find().exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
+      });
+    });
   }
 
   findQuery(query) {
-    return this.Stat.find(query).exec();
+    return new Promise((resolve, reject) => {
+      this.Stat.find(query).exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
+      });
+    });
   }
 }
 

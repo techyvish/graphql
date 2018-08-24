@@ -1,6 +1,9 @@
 import mongoose, {
   Schema,
 } from 'mongoose';
+import {
+  prepare
+} from '../../utils';
 
 const Address = new Schema({
   street1: {
@@ -112,6 +115,10 @@ const UserSchema = new Schema({
       'complete',
     ],
   },
+}, {
+  toObject: {
+    transform: (doc, ret) => prepare(ret),
+  }
 });
 
 const User = mongoose.model('User', UserSchema);

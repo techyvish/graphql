@@ -1,26 +1,22 @@
 import {
   withFilter,
 } from 'graphql-subscriptions';
-import {
-  prepare,
-} from '../../utils';
+
 import TOPICS from '../../subscriptions/topics';
 
 export const Query = {
   Tweets: async (_, __, {
-    mongo: {
-      Tweets,
-    },
+    tweetRepository,
   }) => {
-    const tweets = await Tweets.find().toArray();
-    return tweets.map(prepare);
+    const tweets = await tweetRepository.findAll();
+    return tweets;
   },
   Tweet: async (_, {
     id,
   }, {
     tweetRepository,
   }) => {
-    const tweet = prepare(await tweetRepository.findOne(id));
+    const tweet = await tweetRepository.findOne(id);
     return tweet;
   },
 };
@@ -30,12 +26,12 @@ export const Tweet = {
     userRepository,
   }) => {
     const user = await userRepository.findOne(tweet.author_id);
-    return prepare(user);
+    return user;
   },
   stats: async (tweet, _, context) => {
     // eslint-disable-next-line no-underscore-dangle
     const stats = await context.dataloaders.statForTweet.load(tweet._id);
-    return prepare(stats);
+    return stats;
   },
 };
 
@@ -51,7 +47,7 @@ export const Mutation = {
     };
 
     const response = await tweetRepository.create(newTweet);
-    const obj = prepare(response);
+    const obj = response;
     pubsub.publish(TOPICS.TWEET.TWEET_ADDED, {
       somethingChanged: {
         id: 'PPP',

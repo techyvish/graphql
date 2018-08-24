@@ -1,15 +1,12 @@
 import {
   ObjectId,
 } from 'mongodb';
-import {
-  prepare,
-} from '../../utils';
 
 export const Query = {
   User: async (root, arg, {
     userRepository,
   }) => {
-    const user = prepare(await userRepository.findOne(arg.id));
+    const user = await userRepository.findOne(arg.id);
     return user;
   },
 };
@@ -20,15 +17,11 @@ export const User = {
     tweetRepository,
   }) => {
     const tweetsByUser = await tweetRepository.findQuery({
-      $where: () => {
-        // eslint-disable-next-line no-underscore-dangle
-        const isEqual = this.author_id === new ObjectId(author._id);
-        return isEqual;
-      },
+      // eslint-disable-next-line
+      $where: () => (this.author_id === new ObjectId(author._id)),
     });
-    const data = await tweetsByUser.toArray();
-    return data.map(prepare);
-  },
+    return tweetsByUser;
+  }
 };
 
 export const Mutation = {
@@ -42,8 +35,6 @@ export const Mutation = {
       email: arg.authProvider.detail.email,
     };
     const response = await userRepository.create(newUser);
-    return prepare(Object.assign({
-      _id: response.insertedIds[0],
-    }, newUser));
+    return response;
   },
 };

@@ -101,9 +101,7 @@ describe('User', () => {
         expect(user._id).not.equals(null);
         expect(user.firstName).equals('vishal');
         expect(user.lastName).equals('patel');
-
       } catch (err) {
-        console.log(err);
         expect(err).equals(null);
       }
     });
