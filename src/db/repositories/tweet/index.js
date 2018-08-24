@@ -31,12 +31,10 @@ class TweetRepository extends BaseRepository {
     return new Promise((resolve, reject) => {
       this.Tweet.findOne({
         _id: new ObjectId(id),
-      }).exec((err, doc) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(doc && doc.toObject());
-        }
+      }).exec().then(doc => {
+        resolve(doc && doc.toObject());
+      }).catch(err => {
+        reject(err);
       });
     });
   }
@@ -44,25 +42,21 @@ class TweetRepository extends BaseRepository {
   // TODO: add limit/filter etc optional parameters
   findAll() {
     return new Promise((resolve, reject) => {
-      this.Tweet.find().exec((err, doc) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(doc && doc.map(o => o.toObject()));
-        }
+      this.Tweet.find().exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
       });
     });
   }
 
   findQuery(query) {
     return new Promise((resolve, reject) => {
-      this.Tweet.find(query).exec((err, doc) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(doc && doc.map(o => o.toObject()));
-        }
-      });
+      this.Tweet.find(query).exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
+      })
     });
   }
 }

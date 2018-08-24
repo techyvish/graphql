@@ -31,8 +31,8 @@ class UserRepository extends BaseRepository {
     return new Promise((resolve, reject) => {
       this.User.findOne({
         _id: new ObjectId(id)
-      }).exec().then(result => {
-        resolve(result && result.toObject());
+      }).exec().then(doc => {
+        resolve(doc && doc.toObject());
       }).catch(err => {
         reject(err);
       });
@@ -42,24 +42,20 @@ class UserRepository extends BaseRepository {
   // TODO: add limit/filter etc optional parameters
   findAll() {
     return new Promise((resolve, reject) => {
-      this.User.find().exec((err, doc) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(doc && doc.map(o => o.toObject()));
-        }
+      this.User.find().exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
       });
     });
   }
 
   findQuery(query) {
     return new Promise((resolve, reject) => {
-      this.User.find(query).exec((err, doc) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(doc && doc.map(o => o.toObject()));
-        }
+      this.User.find(query).exec().then(doc => {
+        resolve(doc && doc.map(o => o.toObject()));
+      }).catch(err => {
+        reject(err);
       });
     });
   }
