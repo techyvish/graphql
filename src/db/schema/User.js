@@ -8,32 +8,25 @@ import {
 const Address = new Schema({
   street1: {
     type: Schema.Types.String,
-    required: true,
   },
   street2: {
     type: Schema.Types.String,
-    required: true,
   },
   city: {
     type: Schema.Types.String,
-    required: true,
   },
   state: {
     type: Schema.Types.String,
-    required: true,
   },
   pin: {
     type: Schema.Types.String,
-    required: true,
   },
   country: {
     type: Schema.Types.String,
-    required: true,
   },
   isHidden: {
     type: Schema.Types.Boolean,
-    required: true,
-    default: true,
+    default: false,
   },
 });
 
@@ -57,6 +50,7 @@ const UserSchema = new Schema({
   },
   dateOfBirth: {
     type: Schema.Types.Date,
+    required: true,
   },
   dateAdded: {
     type: Schema.Types.Date,
@@ -65,11 +59,9 @@ const UserSchema = new Schema({
   },
   title: {
     type: Schema.Types.String,
-    required: true,
   },
   description: {
     type: Schema.Types.String,
-    required: true,
   },
   imageUrls: {
     type: [Schema.Types.String],
@@ -81,39 +73,32 @@ const UserSchema = new Schema({
   address: Address,
   mobile: {
     type: Schema.Types.String,
-    required: true,
   },
   mobileVerified: {
     type: Schema.Types.Boolean,
-    required: true,
-    default: false,
   },
   otp: {
     type: Schema.Types.Number,
-    required: true,
     default: parseInt('0', 0),
   },
   height: {
     type: Schema.Types.String,
-    required: true,
   },
   community: {
     type: Schema.Types.String,
-    required: true,
   },
   language: {
     type: Schema.Types.String,
-    required: true,
   },
   registrationStatus: {
     type: Schema.Types.String,
-    required: true,
     enum: [
       'unknown',
       'registered',
       'verified',
       'complete',
     ],
+    default: 'unknown',
   },
 }, {
   toObject: {

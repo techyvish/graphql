@@ -16,15 +16,29 @@ class UserRepository extends BaseRepository {
   }
 
   create(user) {
-    return this.User.create(user);
+    return new Promise((resolve, reject) => {
+      this.User.create(user).then(obj => {
+        resolve(obj);
+      }).catch(error => {
+        reject(error);
+      });
+    });
   }
 
-  update(user) {
-    this.User.update(user);
-  }
-
-  delete(user) {
-    this.User.delete(user);
+  update(id, data) {
+    return new Promise((resolve, reject) => {
+      this.User.findOneAndUpdate({
+          _id: new ObjectId(id)
+        },
+        data, {
+          upsert: true,
+          new: true
+        }).exec().then(doc => {
+        resolve(doc && doc.toObject());
+      }).catch(err => {
+        reject(err);
+      });
+    });
   }
 
   findOne(id) {
@@ -59,6 +73,11 @@ class UserRepository extends BaseRepository {
       });
     });
   }
+
+  delete(user) {
+    this.User.delete(user);
+  }
+
 }
 
 export default UserRepository;

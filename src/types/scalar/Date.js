@@ -7,9 +7,10 @@ import {
 import {
     Kind,
 } from 'graphql/language';
+import moment from 'moment';
 
 // eslint-disable-next-line
-const validate = value => (isNaN(Date.parse(value)) ? true : false);
+const validate = value => isNaN(moment(value).toDate()) ? false : true;
 
 export default new GraphQLScalarType({
     name: 'Date',
